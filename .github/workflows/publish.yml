@@ -30,7 +30,7 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
       - name: Refresh bounded ONE catalogue metadata
         run: |
-          python -m tools.marker_pipeline.generate_catalogue --network --workers 6 --timeout 12 --retries 2
+          python -m tools.marker_pipeline.generate_catalogue --network --source source/clip-db.json --workers 6 --timeout 12 --retries 2
           python -m tools.marker_pipeline.generate_markers
           python -m tools.marker_pipeline.generate_clips --resume
           python -m tools.marker_pipeline.validate_outputs
