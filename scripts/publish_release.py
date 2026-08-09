@@ -10,7 +10,7 @@ import os
 import re
 import shutil
 import subprocess
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
@@ -67,6 +67,7 @@ def main() -> None:
     commit = run("git", "rev-parse", "HEAD")
 
     digest = hashlib.sha256(data).hexdigest()
+    generated_at = datetime.now(timezone.utc)
     manifest = {
         "artifact": {
             "byteSize": len(data),
@@ -74,7 +75,8 @@ def main() -> None:
             "sha256": digest,
             "url": f"https://raw.githubusercontent.com/kas021/AnyGo-Packs/{commit}/releases/{release_id}/clip-db.json"
         },
-        "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
+        "generatedAt": generated_at.isoformat(timespec="seconds").replace("+00:00", "Z"),
+        "expiresAt": (generated_at + timedelta(days=7)).isoformat(timespec="seconds").replace("+00:00", "Z"),
         "minimumAppVersion": "1.0.0",
         "releaseID": release_id,
         "schemaVersion": 1
@@ -94,4 +96,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
