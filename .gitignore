@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+reports/one-catalogue-checkpoint.json
+staging/
+

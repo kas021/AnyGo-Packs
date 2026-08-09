@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schemaVersion", "shows", "clips"],
+  "properties": {
+    "schemaVersion": { "const": 2 },
+    "shows": { "type": "array" },
+    "clips": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["malId", "episode", "part", "startSec", "endSec", "label"]
+      }
+    }
+  }
+}
+

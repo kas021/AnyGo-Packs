@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["payload", "signature"],
+  "additionalProperties": false,
+  "properties": {
+    "payload": { "type": "string", "contentEncoding": "base64" },
+    "signature": { "type": "string", "contentEncoding": "base64" }
+  }
+}
+

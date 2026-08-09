@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "showCount": 284,
+  "episodeCount": 9193,
+  "episodesGenerated": 9193,
+  "episodesReused": 0,
+  "clipCount": 60376,
+  "markerFallbackCount": 7,
+  "markerFallbacks": [
+    {
+      "malId": 21,
+      "episode": 7,
+      "reason": "marker ranges leave no content window"
+    },
+    {
+      "malId": 21,
+      "episode": 564,
+      "reason": "marker ranges leave no content window"
+    },
+    {
+      "malId": 21,
+      "episode": 908,
+      "reason": "marker ranges leave no content window"
+    },
+    {
+      "malId": 269,
+      "episode": 138,
+      "reason": "marker ranges leave no content window"
+    },
+    {
+      "malId": 269,
+      "episode": 148,
+      "reason": "marker ranges leave no content window"
+    },
+    {
+      "malId": 41457,
+      "episode": 1,
+      "reason": "marker ranges leave no content window"
+    },
+    {
+      "malId": 48316,
+      "episode": 1,
+      "reason": "marker ranges leave no content window"
+    }
+  ]
+}
