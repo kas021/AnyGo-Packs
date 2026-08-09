@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CATALOGUE = ROOT / "packs" / "supported-catalogue.v1.json"
 MAPPINGS = ROOT / "packs" / "anikoto-mappings.v1.json"
+MARKERS = ROOT / "packs" / "marker-generation-manifest.v1.json"
 OUTPUT = ROOT / "source" / "clip-db.json"
 QUARANTINE = ROOT / "reports" / "route-quarantine.json"
 
@@ -16,6 +17,12 @@ QUARANTINE = ROOT / "reports" / "route-quarantine.json"
 def main() -> None:
     catalogue = json.loads(CATALOGUE.read_text())
     mapping_payload = json.loads(MAPPINGS.read_text())
+    marker_payload = json.loads(MARKERS.read_text())
+    trusted_markers = {
+        (int(item["malId"]), int(item["episode"]))
+        for item in marker_payload.get("records", [])
+        if item.get("status") == "matched"
+    }
     mappings = {
         (int(item["malId"]), int(item["episode"]))
         for item in mapping_payload.get("records", [])
@@ -64,7 +71,7 @@ def main() -> None:
             "startSec": float(clip["startSec"]),
             "endSec": float(clip["endSec"]),
             "label": str(clip["label"]),
-            "hasMarkers": False
+            "hasMarkers": key in trusted_markers
         })
     if not app_clips:
         raise SystemExit("no route-certified clips")
@@ -85,4 +92,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
