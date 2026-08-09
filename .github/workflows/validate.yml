@@ -1,0 +1,29 @@
+name: Validate pack changes
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate metadata and pipeline
+        run: |
+          python -m unittest discover -s tools/marker_pipeline/tests -t .
+          python -m tools.marker_pipeline.validate_outputs
+          python scripts/build_app_pack.py
+          git diff --exit-code -- source/clip-db.json reports/route-quarantine.json
+      - name: Reject prohibited repository content
+        run: |
+          if grep -RIE '(https?://[^" ]+\.(m3u8|mp4)|BEGIN (OPENSSH|PRIVATE) KEY|Cookie:|Authorization:)' \
+            --exclude='publish_release.py' --exclude-dir='.git' .; then
+            exit 1
+          fi
